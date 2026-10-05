@@ -34,7 +34,8 @@ This document records the architecture and verification decisions for the implem
 - Write data is accepted only on `WVALID && WREADY`.
 - `BVALID` remains asserted until `BREADY` is accepted.
 - `RVALID`, `RDATA`, `RID`, `RRESP`, and `RLAST` remain stable until `RREADY` is accepted.
-- The channel control is represented by AW, W, B, AR, and R state machines coordinated by a central transaction arbiter.
+- The channel control is represented by W, B, and R phase state machines coordinated by a central transaction arbiter.
+- AW and AR acceptance are controlled directly by the central arbiter.
 - The state machines do not provide independent parallel read/write operation.
 
 ## 2. Burst and Address Decisions
@@ -63,11 +64,13 @@ This document records the architecture and verification decisions for the implem
 
 ## 3. Byte-Lane Decisions
 
-- Each `WSTRB` bit enables its corresponding byte lane.
+- Each `WSTRB` bit enables its corresponding data-bus byte lane.
+- The active bus lanes are determined by the transfer address modulo the 4-byte data width.
+- For a 1-byte transfer, one lane is active; for a 2-byte transfer, two adjacent lanes are active; for a 4-byte transfer, all four lanes are active.
 - Four-byte transfers support all 16 `WSTRB` combinations.
-- One- and two-byte transfers use only their active lanes.
+- One- and two-byte transactions constrain strobes to their address-selected active lanes.
 - Disabled byte lanes retain their previous memory contents.
-- Selected bytes are written at their actual byte addresses; sparse strobes are never packed together.
+- Sparse strobes do not pack bytes together; each enabled lane maps to its corresponding byte address.
 
 ## 4. Verification Architecture
 
@@ -118,6 +121,7 @@ Directed transactions cover:
 
 - Driver channel tasks wait for handshakes using bounded timeouts.
 - The driver applies randomized response-channel backpressure by holding `BREADY` and `RREADY` low for 0–3 clock cycles before each response handshake.
+- The driver also inserts randomized 0–3 cycle gaps between W-channel beats by holding `WVALID` low.
 - The RTL holds valid response and data signals while the receiving side is not ready.
 - The scoreboard observes the responses after the randomized delays and checks their IDs, data, response codes, and `RLAST` behavior.
 - A timeout is reported as a fatal verification failure instead of allowing an infinite simulation.
