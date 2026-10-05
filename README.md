@@ -2,7 +2,7 @@
 
 A SystemVerilog AXI4 slave with a 128-byte memory, verified with a layered UVM environment and a self-checking scoreboard.
 
-![WRAP burst](results/wrap_burst.png)
+![WRAP burst](results/1.%20wrap_burst.png)
 *WRAP burst at 0x0C (4 beats × 4 bytes): the address wraps 0x0C → 0x00 → 0x04 → 0x08, and the read data comes back in write order.*
 
 ---
@@ -46,10 +46,10 @@ The simulation passes with **0 UVM errors and 0 fatals**; the full log is in [`r
 
 | Partial strobe | Error responses |
 |---|---|
-| ![WSTRB](results/wstrb_partial.png) | ![SLVERR](results/slverr.png) |
+| ![WSTRB](results/2.%20wstrb_partial.png) | ![SLVERR](results/4.%20slverr.png) |
 | `WSTRB = 0101` updates only byte lanes 0 and 2; readback `0x00C5_5413` shows lanes 1 and 3 kept their old values. | SLVERR for an unsupported size (`AxSIZE=3`) and a misaligned address (`0x21`). |
 
-![DECERR](results/decerr.png)
+![DECERR](results/3.%20decerr_boundary.png)
 *DECERR for an out-of-range address (`0x80`) and a 4-beat burst crossing the 128-byte boundary (`0x78`). Read data is zero, and RVALID and RLAST stay steady while RREADY is low.*
 
 ## How to run
