@@ -55,13 +55,13 @@ The simulation passes with **0 UVM errors and 0 fatals**; the full log is in [`r
 ## How to run
 
 **On EDA Playground** (Cadence Xcelium, UVM 1.2):
-1. Put `rtl/axi_if.sv` and `rtl/axi_slave.sv` in the design pane, with the interface first, or add them as separate file tabs.
+1. Paste `rtl/axi_slave.sv` (the slave module and the `axi_if` interface) into the design pane.
 2. Paste `tb/axi_tb.sv` into the testbench pane.
 3. Tick **UVM 1.2** and click **Run**.
 
 **Locally:**
 ```
-xrun -sv -uvm rtl/axi_if.sv rtl/axi_slave.sv tb/axi_tb.sv
+xrun -sv -uvm rtl/axi_slave.sv tb/axi_tb.sv
 ```
 
 ## Scope
