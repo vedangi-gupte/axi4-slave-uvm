@@ -1,5 +1,5 @@
 xrun: 25.03-s001: (c) Copyright 1995-2025 Cadence Design Systems, Inc.
-TOOL:	xrun	25.03-s001: Started on Oct 04, 2026 at 21:20:49 EDT
+TOOL:	xrun	25.03-s001: Started on Oct 04, 2026 at 23:40:12 EDT
 xrun
 	-Q
 	-unbuffered
@@ -43,9 +43,9 @@ CDNS-UVM-1.2 (25.03-s001)
       (Specify +UVM_NO_RELNOTES to turn off this notice)
 
 UVM_INFO @ 0: reporter [RNTST] Running test axi_test...
-UVM_INFO /xcelium25.03/tools/methodology/UVM/CDNS-1.2/sv/src/base/uvm_objection.svh(1271) @ 37625000: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
-UVM_INFO testbench.sv(537) @ 37625000: uvm_test_top.env.scoreboard [SCOREBOARD] All AXI4 checks passed
-UVM_INFO /xcelium25.03/tools/methodology/UVM/CDNS-1.2/sv/src/base/uvm_report_server.svh(851) @ 37625000: reporter [UVM/REPORT/SERVER] 
+UVM_INFO /xcelium25.03/tools/methodology/UVM/CDNS-1.2/sv/src/base/uvm_objection.svh(1271) @ 50495000: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
+UVM_INFO testbench.sv(550) @ 50495000: uvm_test_top.env.scoreboard [SCOREBOARD] All AXI4 checks passed
+UVM_INFO /xcelium25.03/tools/methodology/UVM/CDNS-1.2/sv/src/base/uvm_report_server.svh(851) @ 50495000: reporter [UVM/REPORT/SERVER] 
 --- UVM Report Summary ---
 
 ** Report counts by severity
@@ -59,7 +59,7 @@ UVM_FATAL :    0
 [TEST_DONE]     1
 [UVM/RELNOTES]     1
 
-Simulation complete via $finish(1) at time 37625 NS + 59
+Simulation complete via $finish(1) at time 50495 NS + 59
 /xcelium25.03/tools/methodology/UVM/CDNS-1.2/sv/src/base/uvm_root.svh:543     $finish;
 xcelium> exit
-TOOL:	xrun	25.03-s001: Exiting on Oct 04, 2026 at 21:20:59 EDT  (total: 00:00:10)
+TOOL:	xrun	25.03-s001: Exiting on Oct 04, 2026 at 23:40:24 EDT  (total: 00:00:12)
