@@ -14,20 +14,20 @@ A SystemVerilog AXI4 slave with a 128-byte memory, verified with a layered UVM e
 **Features**
 - FIXED, INCR, and WRAP bursts (WRAP lengths of 2, 4, 8, and 16 beats)
 - 1-, 2-, and 4-byte transfer sizes
-- Byte-lane writes using `WSTRB`; disabled lanes keep their previous contents
+- Byte-lane writes using `WSTRB`, with narrow transfers placed on the lanes selected by `addr[1:0]`; disabled lanes keep their previous contents
 - Error responses:
   - **SLVERR** for an unsupported size, a misaligned address, an illegal WRAP length, or a `WLAST` mismatch
   - **DECERR** for any burst that touches an address outside 0–127
 - Invalid write bursts are discarded as a whole, so no memory bytes change
 - `BVALID`, `RVALID`, `RDATA`, and `RLAST` hold steady until the matching `READY`
 
-**Architecture:** AW, W, B, AR, and R channel state machines, coordinated by a central read/write arbiter. One transaction is active at a time, and AW wins over AR when both arrive in the same cycle.
+**Architecture:** W, B, and R phase state machines, coordinated by a central read/write arbiter that also controls AW and AR acceptance. One transaction is active at a time, and AW wins over AR when both arrive in the same cycle.
 
 ## Verification (`tb/`)
 
 A UVM environment with these parts: test → env → agent (sequencer, driver, monitor) → scoreboard.
 
-- **Driver:** takes every field from the randomized transaction, and uses bounded timeouts on each handshake.
+- **Driver:** takes every field from the randomized transaction, inserts random 0–3 cycle `WVALID` gaps and `BREADY`/`RREADY` backpressure, and uses bounded timeouts on each handshake.
 - **Monitor:** watches only the interface handshakes, never the DUT's internal state.
 - **Scoreboard:** keeps its own 128-byte reference memory and checks read data byte by byte, along with response codes, response IDs, beat counts, and where `RLAST` falls.
 
